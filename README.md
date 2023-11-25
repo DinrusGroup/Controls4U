@@ -1,18 +1,18 @@
 # Controls4U
 
-Additional visual controls for U++.
+Дополнительные вмзуальные виджеты для U++/DinrusIDE.
 
-| Widget class | Short description |
+| Класс виджета | Краткое описание |
 |---|---|
-| Box | A matrix of child widgets arranged horizontally and vertically. Control resize arranges them all properly |
-| EditFile | Field to enter a file path |
-| EditFolder | Field to enter a folder path |
-| StaticImage | Control to show an image. Different fittings inside frame or covering window background and angles are included |
-| StaticRectangle | Control to show a rectangle |
-| StaticEllipse | Control to show an ellipse |
-| StaticFrame | Control to show a frame |
-| StaticLine | Control to view a line. Different angles, colors and widths are allowed |
-| StaticArrow | Control to show an arrow |
+| Box | Матрица из виджетов-отпрысков, организованных по вертикали и горизонтали. Control resize arranges them all properly |
+| EditFile | Поле для ввода файлового пути |
+| EditFolder | Поле для ввода пути к папке |
+| StaticImage | Контролы для показа изображения. Different fittings inside frame or covering window background and angles are included |
+| StaticRectangle | Контрол для отображения прямоугольника |
+| StaticEllipse | Крнтрол для отобоажения эллипса |
+| StaticFrame | Контрол для отображения рамки |
+| StaticLine | CКонтрол для показа линии. Допускаются разные углы, цвета и ширины. |
+| StaticArrow | Контрол для показа стрелки. |
 | StaticClock | Resizable clock with different styles |
 | Meter | Resizable and flexible meter with different styles and soft movement |
 | Knob | Knob handle to enter numerical data |
