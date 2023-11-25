@@ -30,13 +30,13 @@ Controls4U_Demo::Controls4U_Demo() {
 	controls.Add(&splitterButton_Demo);	grid.Add("SplitterButton");
 	controls.Add(&aboutDlg);			grid.Add("About U++");
 
-	for (int i = 0; i < controls.GetCount(); ++i) 
+	for (int i = 0; i < controls.GetCount(); ++i)
 		rect.Add(controls[i]->SizePos());
-	
+
 	grid.WhenSel << THISBACK (OnGridSel);
 	grid.SetCursor(9);
 	OnGridSel();
-	
+
 	timerOn = false;
 	timeCallback.Set(-100, THISBACK(Timer));
 }
@@ -46,14 +46,14 @@ void Controls4U_Demo::Timer() {
 		return;
 	timerOn = true;
 	staticClock_Demo.UpdateInfo();
-	timerOn = false;	
+	timerOn = false;
 }
 
 GUI_APP_MAIN {
 	ConsoleOutput console(true);
-	
+
 	printf("Controls4U_Demo\nConsoleOutput opened this window\n");
-	
+
 	Controls4U_Demo().Run();
 }
 
@@ -63,12 +63,12 @@ EditFileFolder_Demo::EditFileFolder_Demo() {
 	fileName.ActiveDir(GetDesktopFolder());
 	fileName.Type("Image files", "*.png, *.jpg, *.jpeg, *.tif*, *.bmp, *.gif");
 	fileName.AllFilesType();
-	fileName.WhenChange = [=]{return OnNewFile();};
+	fileName.WhenChange = [=, this]{return OnNewFile();};
 	angleList.Add(0, "0º").Add(1, "90º").Add(2, "180º").Add(3, "270º").SetData(0);
 	angleList.WhenAction = THISBACK(ChangeProperties);
 	imageFit.Add(0, "BestFit").Add(1, "FillFrame").Add(2, "NoScale").Add(3, "RepeatToFill").SetData(0);
 	imageFit.WhenAction = THISBACK(ChangeProperties);
-	
+
 	back.Set(Images::paper());
 }
 bool EditFileFolder_Demo::OnNewFile() {
@@ -76,7 +76,7 @@ bool EditFileFolder_Demo::OnNewFile() {
 		if (FileExists(~fileName)) {
 			Exclamation("File not found");
 			return false;
-		} else {	
+		} else {
 			Exclamation("File format is not supported");
 			return false;
 		}
@@ -90,7 +90,7 @@ void EditFileFolder_Demo::ChangeProperties() {
 
 StaticCtrls_Demo::StaticCtrls_Demo() {
 	CtrlLayout(*this);
-	
+
 	back.Set(Images::paper());
 }
 
@@ -98,7 +98,7 @@ StaticCtrlsTest_Demo::StaticCtrlsTest_Demo() {
 	CtrlLayout(*this);
 }
 
-void StaticClock_Demo::UpdateInfo() {	
+void StaticClock_Demo::UpdateInfo() {
 	for(Ctrl *q = GetFirstChild(); q; q = q->GetNext()) {
 		if (StaticClock *c = dynamic_cast<StaticClock *>(q))
 			if (!c->IsAuto())
@@ -134,10 +134,10 @@ StaticClock_Demo::StaticClock_Demo() {
 
 Box_Demo::Box_Demo() {
 	CtrlLayout(*this);
-	
+
 	splitter.Horz(left.SizePos(), right.SizePos());
 	splitter.SetPos(7000, 0);
-	
+
 	lt.AddColumn("Left top");
 	ct.AddColumn("Centre (double) top");
 	rt.AddColumn("Right top");
@@ -156,19 +156,19 @@ Box_Demo::Box_Demo() {
 		t.Add(i);
 		b.Add(i);
 	}
-	
+
 	left.Add(lt, 0, 0);
 	left.Add(ct, 0, 1);
 	left.Add(rt, 0, 2);
 	left.Add(lb, 1, 0);
 	left.Add(cb, 1, 1);
 	left.Add(rb, 1, 2);
-	
+
 	left.SetWidths({1, 2, 1});
-	
+
 	right.Add(t, 0, 0);
 	right.Add(b, 1, 0);
-	
+
 	right.WhenHeights = [&](int width, int height, Vector<int> &heights) {
 		heights.SetCount(2);
 		heights[0] = max(0, height - width);
@@ -200,29 +200,29 @@ Meter_Demo::Meter_Demo() {
 	knob2.WhenSlideFinish = THISBACK2(ChangeValueKnob, &knob2, &meter2);
 	knob3.WhenSlideFinish = THISBACK2(ChangeValueKnob, &knob3, &meter3);
 	knob4.WhenSlideFinish = THISBACK2(ChangeValueKnob, &knob4, &meter4);
-	knob5.WhenSlideFinish = THISBACK2(ChangeValueKnob, &knob5, &meter5);	
+	knob5.WhenSlideFinish = THISBACK2(ChangeValueKnob, &knob5, &meter5);
 	colorType.Add(Meter::WhiteType, "WhiteType").Add(Meter::BlackType, "BlackType")
 			 .SetData(Meter::BlackType);
-	colorType.WhenAction = THISBACK(ChangeProperties);	
+	colorType.WhenAction = THISBACK(ChangeProperties);
 	checkNumber.WhenAction = THISBACK(ChangeProperties);
 	checkNumber = true;
 	knobColorType.Add(Knob::SimpleWhiteType, "SimpleWhiteType")
 				 .Add(Knob::SimpleBlackType, "SimpleBlackType")
 				 .Add(Knob::WhiteType, "WhiteType")
 				 .Add(Knob::BlackType, "BlackType").SetData(Knob::BlackType);
-	knobColorType.WhenAction = THISBACK(ChangePropertiesKnob);	
+	knobColorType.WhenAction = THISBACK(ChangePropertiesKnob);
 	knobCheckNumber = true;
-	knobCheckNumber.WhenAction = THISBACK(ChangePropertiesKnob);	
-	knobCheckInterlocking.WhenAction = THISBACK(ChangePropertiesKnob);	
+	knobCheckNumber.WhenAction = THISBACK(ChangePropertiesKnob);
+	knobCheckInterlocking.WhenAction = THISBACK(ChangePropertiesKnob);
 	knobCheckClockWise = true;
-	knobCheckClockWise.WhenAction = THISBACK(ChangePropertiesKnob);	
+	knobCheckClockWise.WhenAction = THISBACK(ChangePropertiesKnob);
 	knobSetMark.Add(Knob::NoMark, "NoMark")
 			   .Add(Knob::Line, "Line")
 			   .Add(Knob::Circle, "Circle").SetData(Knob::Circle);
-	knobSetMark.WhenAction = THISBACK(ChangePropertiesKnob);	
+	knobSetMark.WhenAction = THISBACK(ChangePropertiesKnob);
 	knobSetStyle.Add(Knob::Simple, "Simple")
 			    .Add(Knob::Rugged, "Rugged").SetData(Knob::Simple);
-	knobSetStyle.WhenAction = THISBACK(ChangePropertiesKnob);	
+	knobSetStyle.WhenAction = THISBACK(ChangePropertiesKnob);
 	back.Set(Images::cream2());
 }
 
@@ -230,7 +230,7 @@ FileBrowser_Demo::FileBrowser_Demo() {
 	CtrlLayout(*this);
 
 	browser.SetReadOnly().SetUseTrashBin().SetBrowseLinks().SetDeleteReadOnly().SetDragAndDrop();
-	
+
 	browser.WhenAction = THISBACK(FileOpened);
 	browser.WhenSelected = THISBACK(FileSelected);
 }
@@ -249,7 +249,7 @@ void FileBrowser_Demo::ChangeProperties() {
 
 Functions4U_Demo::Functions4U_Demo() {
 	CtrlLayout(*this);
-	
+
 	String myqtf;
 
 	QtfRichObject a = QtfEquation("-sqrt(2/3)");
@@ -258,23 +258,23 @@ Functions4U_Demo::Functions4U_Demo() {
 	QtfRichObject d = QtfEquation("sqrt(cos(p^2))");
 	QtfRichObject e = QtfEquation("summation(a+b*x+c*x^2+d*x^3, x = h, h+1)*dx = SI_h");
 	QtfRichObject f = QtfEquation("exp(-1/2*(b-r)/a*t)*r*a*(d*b*w^2*a+d*r*w^2*a-d*r*c+d*b*c+2*f1*w*a*c)/((2*w^2*a)^2+b^2-2*c*a-b*r)");
-	
+
 	myqtf << "[R3 This are some formulas in QTF:&" << a << "&" << b << "&" << c << "&" << d << "&" << e << "&" << f;
 
 	equation.SetData(myqtf);
 
-	butDiff.WhenAction = THISBACK(OnDiff);	
+	butDiff.WhenAction = THISBACK(OnDiff);
 	butPatch.WhenAction = THISBACK(OnPatch);
 	butShowEquation.WhenAction = THISBACK(OnSet);
 }
 
 void Functions4U_Demo::OnDiff() {
-	if (!BSDiff(~editOriginal, ~editNew, ~editPatch)) 
+	if (!BSDiff(~editOriginal, ~editNew, ~editPatch))
 		Exclamation(DeQtf(BsGetLastError()));
 }
 
 void Functions4U_Demo::OnPatch() {
-	if (!BSPatch(~editOriginal, ~editNew, ~editPatch)) 
+	if (!BSPatch(~editOriginal, ~editNew, ~editPatch))
 		Exclamation(DeQtf(BsGetLastError()));
 }
 
@@ -282,10 +282,10 @@ void Functions4U_Demo::OnSet() {
 	String myqtf;
 
 	QtfRichObject a = QtfEquation(~strEquation);
-	
+
 	myqtf << a;
 
-	userEquation.SetData(myqtf);	
+	userEquation.SetData(myqtf);
 }
 /*
 PainterCanvas_Demo::PainterCanvas_Demo() {
@@ -293,7 +293,7 @@ PainterCanvas_Demo::PainterCanvas_Demo() {
 
 	//imgCtrl.SetImage(Images::ClockImage());
 	//LoadSvg(drawingCanvas, AppendFileNameX(GetDesktopFolder(), "svg/demo.svg"));
-	
+
 	LineElem &elem = static_cast<LineElem&>(painterCanvas.elemList.elems.Add(new LineElem(100, 100, 200, 200)));
 	elem.style.SetStrokeColor(Green()).SetStrokeWidth(3);
 }
@@ -308,10 +308,10 @@ StaticImageSet_Demo::StaticImageSet_Demo() {
 
 SplitterButton_Demo::SplitterButton_Demo() {
 	Add(splitterH.SizePos());
-	
+
 	splitterV.Vert(top.SizePos(), bottom.SizePos()).SetPositions(1000, 5000, 9000).SetInitialPositionId(1);
 	splitterH.Horz(left.SizePos(), splitterV.SizePos()).SetPositions(1000, 5000, 9000).SetInitialPositionId(1);
-	
+
 	top.AddColumn("Column");
 	bottom.AddColumn("Column");
 	left.AddColumn("Column");
@@ -330,7 +330,7 @@ void Controls4U_Demo::OnGridSel() {
 	for (int i = 0; i < controls.GetCount(); ++i) {
 		if (i == row)
 			controls[i]->Show();
-		else 
+		else
 			controls[i]->Hide();
 	}
 }
