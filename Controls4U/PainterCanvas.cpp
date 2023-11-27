@@ -488,7 +488,7 @@ Image PainterCanvas::GetImage(Size sz)
         DoPaint(sw);
         WhenPaint(sw);
     }
-    return ib;
+    return static_cast<Image>(ib);
 }
 
 void PainterCanvas::Paint(Draw& w) {
